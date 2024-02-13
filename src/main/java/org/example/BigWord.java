@@ -9,9 +9,9 @@ public class BigWord {
     private static String[] wordList;
     private static int maxLength;
     private static int wordIndex;
-
     private static int arraySize;
 
+    // Основной метод данной программы
     static void maxWordRunner() {
         scan = new Scanner(System.in);
         System.out.print("Задайте размер массива: ");
@@ -21,6 +21,7 @@ public class BigWord {
         answerPrint();
     }
 
+    // Запрос на ввод корректного размера массива (без ограничений по верхней границе)
     private static void arraySizeInput() {
         try {
             arraySize = scan.nextInt();
@@ -34,6 +35,7 @@ public class BigWord {
         }
     }
 
+    // Заполняем массив строк
     private static void arrayFiller() {
         wordList = new String[arraySize];
         for (int i = 1; i < wordList.length + 1; i++) {
@@ -42,6 +44,7 @@ public class BigWord {
         }
     }
 
+    // Поиск самого длинного слова
     private static void findMaxWordLength() {
         maxLength = wordList[0].length();
         wordIndex = 0;
@@ -53,6 +56,7 @@ public class BigWord {
         }
     }
 
+    // Вывод ответа и переход к запросу на повторную игру
     private static void answerPrint() {
         System.out.printf("Самое длинное слово - %s. " +
                 "\nДлина самого длинного слова в массиве = %s, " +
@@ -60,6 +64,7 @@ public class BigWord {
         oneMoreTime();
     }
 
+    // Спрашиваем для еще 1 раза
     private static void oneMoreTime() {
         System.out.print("\nСыграем еще раз? Да/Нет: ");
         String oneMore = scan.next().toLowerCase(Locale.ROOT);
