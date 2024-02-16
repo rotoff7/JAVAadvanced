@@ -4,59 +4,108 @@ import java.util.Random;
 
 public class Task3Part1 {
 
+    private static boolean positive = false;
+    private static boolean negative = false;
+    private static int positiveStartPoint;
+    private static int negativeStartPoint;
+
+    /**
+     * Точка входа и основной метод программы, где:
+     * Спера инициирование массива с размерностью 20 (по условию),
+     * его наполнение и определение наличия положительных и отрицательных чисел
+     * @see #arrayFillAndCheck(int[])
+     * Если положительный и отрицательные числа присутствуют в массиве, то выполняем определение
+     * положений искомых элементов в массиве и меняем их местами.
+     * Результаты выводятся в консоль.
+     * @see #arrayPrint(int[]) 
+     */
     public static void main(String[] args) {
-        Random random = new Random();
-        int maxNum = 10;
-        int minNum = -10;
         int[] array = new int[20];
-        for (int i = 0; i < array.length; i++) {
-            array[i] = random.nextInt((maxNum - minNum) + 1) + minNum;
+        arrayFillAndCheck(array);
+        if (!positive || !negative) {
+            System.out.println("\nВ массиве нет положительных или отрицательных чисел. Невозможно выполнить перестановку.");
+            System.exit(0);
         }
         System.out.print("\nДо перестановки элементов.");
         arrayPrint(array);
-        elementSwap(array, minElement(array), maxElement(array));
+        elementSwap(array, maxNegativeElement(array), minPositiveElement(array));
         System.out.print("\nПосле перестановки элементов.");
         arrayPrint(array);
     }
 
-    private static int maxElement(int[] arr) {
-        int maxIndex = 0;
-        int maxValue = arr[0];
+    /**
+     * Заполняет массив случайными числами в диапазоне [-10 ; 10].
+     * Определяет есть ли в массиве хоть одно положительное
+     * и отрицательное число и сохраняет их индексы (первое попавшееся).
+     * Это необходимо  для обработки ситуации, когда в массиве будет отсутствовать одна из категорий чисел,
+     * и определения числа от которого отталкиваться при переборе значений (нельзя просто указать первый элемент)
+     *
+     * @param arr передаваемый в метод инициализированный массив
+     * @return возвращаем заполненный числами массив
+     */
+    private static int[] arrayFillAndCheck(int[] arr) {
+        Random random = new Random();
         for (int i = 0; i < arr.length; i++) {
-            if (arr[i] > maxValue) {
-                maxValue = arr[i];
-                maxIndex = i;
+            int minNum = -10;
+            int maxNum = 10;
+            arr[i] = random.nextInt((maxNum - minNum) + 1) + minNum;
+            if (!positive && arr[i] >= 0) {
+                positive = true;
+                positiveStartPoint = i;
+            } else if (!negative && arr[i] < 0) {
+                negative = true;
+                negativeStartPoint = i;
             }
         }
-        System.out.printf("\nМаксимальный элемент массива: %d, впервые встречается под индексом: %d",
-                maxValue, maxIndex);
-        return maxIndex;
+        return arr;
     }
 
-    private static int minElement(int[] arr) {
-        int minIndex = 0;
-        int minValue = arr[0];
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] < minValue) {
-                minValue = arr[i];
-                minIndex = i;
+    // Определяем позицию минимального положительного числа массива
+    private static int minPositiveElement(int[] arr) {
+        int minPositiveIndex = positiveStartPoint;
+        int minPositiveValue = arr[positiveStartPoint];
+        for (int i = positiveStartPoint; i < arr.length; i++) {
+            if (arr[i] >= 0 && arr[i] < minPositiveValue) {
+                minPositiveValue = arr[i];
+                minPositiveIndex = i;
             }
         }
-        System.out.printf("\nМинимальный элемент массива: %d, впервые встречается под индексом: %d",
-                minValue, minIndex);
-        return minIndex;
+        System.out.printf("\nМинимальный положительный элемент массива = %d, впервые встречается под индексом: %d",
+                minPositiveValue, minPositiveIndex);
+        return minPositiveIndex;
     }
 
-    private static void elementSwap(int[] arr, int minIndex, int maxIndex){
-        int temp = arr[minIndex];
-        arr[minIndex] = arr[maxIndex];
-        arr[maxIndex] = temp;
+    // Определяем позицию максимального отрицательного числа массива
+    private static int maxNegativeElement(int[] arr) {
+        int maxNegativeIndex = negativeStartPoint;
+        int maxNegativeValue = arr[negativeStartPoint];
+        for (int i = negativeStartPoint; i < arr.length; i++) {
+            if (arr[i] < 0 && arr[i] > maxNegativeValue) {
+                maxNegativeValue = arr[i];
+                maxNegativeIndex = i;
+            }
+        }
+        System.out.printf("\nМаксимальный отрицательный элемент массива = %d, впервые встречается под индексом: %d",
+                maxNegativeValue, maxNegativeIndex);
+        return maxNegativeIndex;
     }
 
-    private static void arrayPrint(int[] arr){
+    /**
+     * Производим свап элементов по найденны индексам
+     * @see #maxNegativeElement(int[])
+     * @see #minPositiveElement(int[])
+     */
+    private static void elementSwap(int[] arr, int maxNegIndex, int minPosIndex) {
+        int temp = arr[maxNegIndex];
+        arr[maxNegIndex] = arr[minPosIndex];
+        arr[minPosIndex] = temp;
+    }
+
+    // Метод для вывода значений массива в консоль
+    private static void arrayPrint(int[] arr) {
         System.out.println();
         System.out.print("Вывод массива чисел: ");
-        for (int element:arr) {
+        for (int element : arr) {
             System.out.print(element + ", ");
         }
     }
