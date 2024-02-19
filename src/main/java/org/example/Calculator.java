@@ -65,7 +65,7 @@ public class Calculator {
         try {
             System.out.print("Введите первое число: ");
             num1 = scan.nextDouble();
-            System.out.print("Введите первое число: ");
+            System.out.print("Введите второе число: ");
             num2 = scan.nextDouble();
         } catch (InputMismatchException e) {
             calculatorHelp();
