@@ -1,11 +1,11 @@
 package org.example.calculator;
 
 
-public final class CalculatorOOP implements MathOperations {
+public final class CalculatorOperations implements MathOperations {
 
     public static int operationsCount = 0;
 
-    CalculatorOOP() {
+    CalculatorOperations() {
     }
 
     public static int getOperationsCount() {

@@ -3,22 +3,33 @@ package org.example.calculator;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Runner {
-    private static CalculatorOOP calc;
+public class CalculatorRunner {
+    private static CalculatorOperations calc;
     private static Scanner scan;
     private static final String[] validOperations = {"/", "*", "+", "-"};
     private static String userOperation;
     private static double num1;
     private static double num2;
     private static double result;
-    static void calculatorRunner() {
-        calc = new CalculatorOOP();
+
+    /**
+     * Основной метод данной программы, через который она будет работать
+     * пока пользователь не введет команду для завершение работы.
+     * @see #programExit()
+     */
+    public static void calculatorRunner() {
+        calc = new CalculatorOperations();
         scan = new Scanner(System.in);
         operationInput();
         valueInput();
         calculate(userOperation);
         answerOutPut();
     }
+
+    /**
+     * В данной реализации метод только проверяет валидность введенной операции и выходит из нее, если инпут = exit
+     * @see #programExit()
+     */
     private static void operationInput() {
         System.out.print("Выберите одну из операций ('/', '*', '+', '-') " +
                 "или введите 'exit' для выхода из программы: ");
@@ -35,6 +46,7 @@ public class Runner {
         calculatorRunner();
     }
 
+    // Вычисления на основе полученных от пользователя чисел и знака операции. Вызываются от класса с операциями
     private static void calculate(String sign){
         switch (sign) {
             case ("+"):
@@ -81,7 +93,7 @@ public class Runner {
 
     // Метод выхода из калькулятора
     private static void programExit() {
-        System.out.println("Кол-во выполненных операций: " + CalculatorOOP.getOperationsCount());
+        System.out.println("Кол-во выполненных операций: " + CalculatorOperations.getOperationsCount());
         System.out.println("Завершение работы калькулятора...");
         scan.close();
         System.exit(0);
