@@ -32,21 +32,21 @@ public class Manipulations {
         return map;
     }
 
-    public void fileWasNotEmpty(ArrayList<String> list){
-        if (list.isEmpty()){
+    public void fileWasNotEmpty(ArrayList<String> list) {
+        if (list.isEmpty()) {
             System.out.println("Файл пуст.");
             System.exit(0);
         }
     }
 
     public void printMostPopularWord(Map<String, Integer> map) {
-        int maxCount = Collections.max(map.values());
-        for (Map.Entry<String, Integer> pair : map.entrySet()) {
-            if (pair.getValue() == maxCount) {
-                System.out.printf("Самое часто встречаемое слово = %s. Встречается в файле - %d раз(а).",
-                        pair.getKey(), pair.getValue());
-                break;
-            }
+        List<String> maxCountKeys = getAllMaxCount(map); // Собираем слова с наибольшим кол-во повторений по ключу
+        if (maxCountKeys.size() > 1) {
+            System.out.println("В файле несколько самых встречаемых слов ↓↓↓");
+        }
+        for (String key : maxCountKeys) {
+            System.out.printf("Самое часто встречаемое слово = %s. Встречается в файле - %d раз(а).\n",
+                    key, map.get(key));
         }
     }
 
@@ -58,6 +58,7 @@ public class Manipulations {
 
     /**
      * Метод создает экземпляр StringBuilder-а и записывает в него по 10 слов на одну строку.
+     *
      * @param list Принимает распарсенный по словам файл
      * @return выводим нужный для вывода в консоль StringBuilder
      */
@@ -74,6 +75,17 @@ public class Manipulations {
             }
         }
         return oneLine;
+    }
+
+    private List<String> getAllMaxCount(Map<String, Integer> map) {
+        int maxCount = Collections.max(map.values());
+        List<String> maxCountKeys = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            if (entry.getValue() == maxCount) {
+                maxCountKeys.add(entry.getKey());
+            }
+        }
+        return maxCountKeys;
     }
 
 
