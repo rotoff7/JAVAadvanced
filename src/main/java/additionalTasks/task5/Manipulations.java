@@ -32,6 +32,13 @@ public class Manipulations {
         return map;
     }
 
+    public void fileWasNotEmpty(ArrayList<String> list){
+        if (list.isEmpty()){
+            System.out.println("Файл пуст.");
+            System.exit(0);
+        }
+    }
+
     public void printMostPopularWord(Map<String, Integer> map) {
         int maxCount = Collections.max(map.values());
         for (Map.Entry<String, Integer> pair : map.entrySet()) {
