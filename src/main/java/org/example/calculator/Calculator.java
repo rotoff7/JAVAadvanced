@@ -2,13 +2,17 @@ package org.example.calculator;
 
 
 public final class Calculator {
-    private static final String[] validOperations = {"/", "*", "+", "-"};
-    private double result;
+
+    private static int operationCount = 0;
     private double number1;
     private double number2;
-    private String operation;
 
     Calculator() {
+    }
+
+    Calculator(double n1, double n2) {
+        this.number1 = n1;
+        this.number2 = n2;
     }
 
     public double getNumber1() {
@@ -27,60 +31,53 @@ public final class Calculator {
         this.number2 = number2;
     }
 
-    public String getOperation() {
-        return operation;
+    public int getOperationCount(){
+        return operationCount;
     }
 
-    public double getResult() {
-        calculate();
-        return result;
-    }
-
-    public void setOperation(String operation) throws IllegalArgumentException {
-        for (String sign : validOperations) {
-            if (operation.equals(sign)) {
-                this.operation = operation;
-                break;
-            }
-        }
-        if (this.operation == null) {
-            throw new IllegalArgumentException();
-        }
-    }
-
-    private void calculate() {
-        switch (operation) {
-            case ("+"):
-                this.result = sum();
-                break;
-            case ("-"):
-                this.result = subtraction();
-                break;
-            case ("/"):
-                this.result = division();
-                break;
-            case ("*"):
-                this.result = multiplication();
-                break;
-        }
-    }
-
-    private double sum() {
+    public double sum() {
+        operationCount += 1;
         return number1 + number2;
     }
 
-    private double subtraction() {
+    public double sum(double num1, double num2) {
+        operationCount += 1;
+        return number1 + number2;
+    }
+
+    public double subtraction() {
+        operationCount += 1;
         return number1 - number2;
     }
 
-    private double division() throws ArithmeticException {
-        if (number2 == 0) {
+    public double subtraction(double num1, double num2) {
+        operationCount += 1;
+        return number1 - number2;
+    }
+
+    public double division() throws ArithmeticException {
+        if (number2 == 0){
             throw new ArithmeticException();
         }
+        operationCount += 1;
         return number1 / number2;
     }
 
-    private double multiplication() {
+    public double division(double num1, double num2) throws ArithmeticException {
+        if (num2 == 0){
+            throw new ArithmeticException();
+        }
+        operationCount += 1;
+        return number1 / number2;
+    }
+
+    public double multiplication() {
+        operationCount += 1;
+        return number1 * number2;
+    }
+
+    public double multiplication(double num1, double num2) {
+        operationCount += 1;
         return number1 * number2;
     }
 
