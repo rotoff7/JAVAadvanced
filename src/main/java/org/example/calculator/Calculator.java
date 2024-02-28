@@ -8,7 +8,7 @@ public final class Calculator {
     private double number2;
     private String operation;
 
-    Calculator() {
+    public Calculator() {
     }
 
     public double getNumber1() {
