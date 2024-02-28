@@ -7,10 +7,10 @@ public final class Calculator {
     private double number1;
     private double number2;
 
-    Calculator() {
+    public Calculator() {
     }
 
-    Calculator(double n1, double n2) {
+    public Calculator(double n1, double n2) {
         this.number1 = n1;
         this.number2 = n2;
     }
