@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CalculatorTest {
 
     @Test
-    public void unitCheckTest() {
+    public void initialValuesTest() {
         Calculator calculator = new Calculator();
         assertEquals(calculator.getNumber1(), 0.0);
         assertEquals(calculator.getNumber2(), 0.0);
